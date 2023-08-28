@@ -6,6 +6,7 @@ use App\Models\Project;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreProjectRequest;
 use Illuminate\Http\Request;
+use App\Models\Technology;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
