@@ -34,6 +34,13 @@
                     <label for="" class="control-label">Data di Creazione</label>
                     <input type="date" class="form-control" id="data_di_creazione" name="data_di_creazione" placeholder="Data di Creazione">
                 </div>
+
+                @foreach ($technologies as $technology)
+                <input type="checkbox" value="{{$technology->id}}" name = "technology" id="{{$technology->id}}">
+                <label for="{{$technology->id}}">{{$technology->name}}</label>
+
+                @endforeach
+                
                 <div class="mb-3">
                   <label for="formFile" class="form-label">Logo</label>
                   <input class="form-control" type="file" id="thumb" name="thumb">

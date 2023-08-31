@@ -30,7 +30,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects.create');
+        $technologies = Technology::all();
+
+        return view("admin.project.create", compact("technologies"));
 
     }
 
@@ -55,6 +57,7 @@ class ProjectController extends Controller
             $project->thumb = $path;
         }
         $project->save();
+        $project->technologies()->attach($form_data["technology"]);
         return redirect()->route('admin.projects.index');
 
     }
