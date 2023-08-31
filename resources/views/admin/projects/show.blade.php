@@ -87,7 +87,7 @@
                             </tr>
                             <tr>
                                 <th scope="row" colspan="2">U.S. Price</th>
-                                <td>{{$project->price}}</td>
+                                
                             </tr>
                             <tr>
                                 <th scope="row" colspan="2">On Sale Date</th>

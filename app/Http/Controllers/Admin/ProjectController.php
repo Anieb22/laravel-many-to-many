@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreProjectRequest;
 use Illuminate\Http\Request;
 use App\Models\tecnology;
+use App\Models\Type;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,9 +32,9 @@ class ProjectController extends Controller
     public function create()
     {
         $tecnologies = tecnology::all();
+        $types = Type::all();
 
-        return view("admin.projects.create", compact("tecnologies"));
-
+        return view('admin.projects.create', compact('tecnologies', 'types'));
     }
 
     /**
@@ -51,14 +52,19 @@ class ProjectController extends Controller
         $project->nome_progetto = $form_data['nome_progetto'];
         $project->descrizione = $form_data['descrizione'];
         $project->passaggi = $form_data['passaggi'];
-        $project->data_di_creazione = $form_data['data_di_creazione'];        
+        $project->data_di_creazione = $form_data['data_di_creazione'];       
         if ($request->hasFile('thumb')) {
             $path = $request->file('thumb')->store('thumb');
             $project->thumb = $path;
         }
         $project->save();
-        $project->tecnologies()->attach($form_data["tecnology"]);
-        return redirect()->route('admin.projects.index');
+        if (isset($form_data["type"])) {
+            $project->types()->attach($form_data["type"]);
+        }
+        
+        if (isset($form_data["tecnology"])) {
+            $project->tecnologies()->attach($form_data["tecnology"]);
+        }        return redirect()->route('admin.projects.index');
 
     }
 
@@ -71,6 +77,7 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         $tecnologies = Tecnology::all();
+        $types = Type::all();
 
         return view('admin.projects.show', compact('project', 'types', 'tecnologies'));;
 
@@ -84,9 +91,10 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        $tecnologies = tecnology::all();
-        $project->tecnology()->sync($tecnologies);
-        return view('admin.projects.edit', compact('project'));
+        $tecnologies = Tecnology::all();
+        $types = Type::all();
+
+        return view('admin.projects.edit', compact('project','types', 'tecnologies'));
 
     }
 
@@ -99,21 +107,22 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        $form_data=$request->all();
+        $form_data = $request->all();
         $project->update($form_data);
+        
         if ($request->hasFile('thumb')) {
             Storage::delete($project->thumb);
             $path = $request->file('thumb')->store('thumb');
             $project->thumb = $path;
-            $project->save();
-        }
-
-        if($request->has('tecnologies')) {
-            $project->tecnologies()->sync($tecnologies);
         }
         
-        else{
-            $project->tecnologies()->detach();
+        $project->save();
+        
+        if ($request->has('tecnologies')) {
+            $selectedTecnologies = $request->input('tecnologies');
+            $project->tecnology()->sync($selectedTecnologies);
+        } else {
+            $project->tecnology()->detach();
         }
 
         return redirect()->route('admin.projects.index');

@@ -34,12 +34,20 @@
                     <label for="" class="control-label">Data di Creazione</label>
                     <input type="date" class="form-control" id="data_di_creazione" name="data_di_creazione" placeholder="Data di Creazione">
                 </div>
-
-                @foreach ($tecnologies as $tecnology)
-                <input type="checkbox" value="{{$tecnology->id}}" name = "tecnology" id="{{$tecnology->id}}">
-                <label for="{{$tecnology->id}}">{{$tecnology->tecnology}}</label>
-
-                @endforeach
+                <div class="form-group my-2">
+                    <h6 for="" class="control-label">Tipo</h6>
+                    @foreach ($types as $type)
+                    <input type="checkbox" value="{{$type->id}}" name = "type_id[]" id="{{$type->id}}">
+                    <label for="{{$type->id}}">{{$type->type}}</label>
+                    @endforeach
+                </div>
+                <div class="form-group my-2">
+                    <h6 for="" class="control-label">Tecnologia</h6>
+                    @foreach ($tecnologies as $tecnology)
+                    <input type="checkbox" value="{{$tecnology->id}}" name = "tecnology_id[]" id="{{$tecnology->id}}">
+                    <label for="{{$tecnology->id}}">{{$tecnology->tecnology}}</label>
+                    @endforeach
+                </div>
                 
                 <div class="mb-3">
                   <label for="formFile" class="form-label">Logo</label>

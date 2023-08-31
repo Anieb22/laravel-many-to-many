@@ -41,12 +41,20 @@
                   <input class="form-control" type="file" id="thumb" name="thumb">
                 </div>
 
-                @foreach ($tecnologies as $tecnology)
-                <input type="checkbox" value="{{$tecnology->id}}" name = "tecnology" id="{{$tecnology->id}}">
-                <label for="{{$tecnology->id}}">{{$tecnology->tecnology}}</label>
-
-                @endforeach
-
+                <div class="form-group my-2">
+                    <h6 for="" class="control-label">Tipo</h6>
+                    @foreach ($types as $type)
+                    <input type="radio" value="{{$type->id}}" name = "type_id" id="{{$type->id}}">
+                    <label for="{{$type->id}}">{{$type->type}}</label>
+                    @endforeach
+                </div>
+                <div class="form-group my-2">
+                    <h6 for="" class="control-label">Tecnologia</h6>
+                    @foreach ($tecnologies as $tecnology)
+                    <input type="checkbox" value="{{$tecnology->id}}" name = "tecnology_id" id="{{$tecnology->id}}">
+                    <label for="{{$tecnology->id}}">{{$tecnology->tecnology}}</label>
+                    @endforeach
+                </div>
                 <div class="form-group my-2">
                     <button type="submit" class="btn btn-primary">Salva Progetto</button>
                 </div>
