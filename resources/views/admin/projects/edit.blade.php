@@ -40,6 +40,13 @@
                   <label for="formFile" class="form-label">Logo</label>
                   <input class="form-control" type="file" id="thumb" name="thumb">
                 </div>
+
+                @foreach ($tecnologies as $tecnology)
+                <input type="checkbox" value="{{$tecnology->id}}" name = "tecnology" id="{{$tecnology->id}}">
+                <label for="{{$tecnology->id}}">{{$tecnology->tecnology}}</label>
+
+                @endforeach
+
                 <div class="form-group my-2">
                     <button type="submit" class="btn btn-primary">Salva Progetto</button>
                 </div>

@@ -6,7 +6,7 @@ use App\Models\Project;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreProjectRequest;
 use Illuminate\Http\Request;
-use App\Models\Technology;
+use App\Models\tecnology;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,9 +30,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $technologies = Technology::all();
+        $tecnologies = tecnology::all();
 
-        return view("admin.project.create", compact("technologies"));
+        return view("admin.projects.create", compact("tecnologies"));
 
     }
 
@@ -57,7 +57,7 @@ class ProjectController extends Controller
             $project->thumb = $path;
         }
         $project->save();
-        $project->technologies()->attach($form_data["technology"]);
+        $project->tecnologies()->attach($form_data["tecnology"]);
         return redirect()->route('admin.projects.index');
 
     }
@@ -70,7 +70,9 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return view('admin.projects.show', compact('project'));
+        $tecnologies = Tecnology::all();
+
+        return view('admin.projects.show', compact('project', 'types', 'tecnologies'));;
 
     }
 
@@ -82,6 +84,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $tecnologies = tecnology::all();
+        $project->tecnology()->sync($tecnologies);
         return view('admin.projects.edit', compact('project'));
 
     }
@@ -102,6 +106,14 @@ class ProjectController extends Controller
             $path = $request->file('thumb')->store('thumb');
             $project->thumb = $path;
             $project->save();
+        }
+
+        if($request->has('tecnologies')) {
+            $project->tecnologies()->sync($tecnologies);
+        }
+        
+        else{
+            $project->tecnologies()->detach();
         }
 
         return redirect()->route('admin.projects.index');

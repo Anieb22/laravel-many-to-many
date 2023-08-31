@@ -35,9 +35,9 @@
                     <input type="date" class="form-control" id="data_di_creazione" name="data_di_creazione" placeholder="Data di Creazione">
                 </div>
 
-                @foreach ($technologies as $technology)
-                <input type="checkbox" value="{{$technology->id}}" name = "technology" id="{{$technology->id}}">
-                <label for="{{$technology->id}}">{{$technology->name}}</label>
+                @foreach ($tecnologies as $tecnology)
+                <input type="checkbox" value="{{$tecnology->id}}" name = "tecnology" id="{{$tecnology->id}}">
+                <label for="{{$tecnology->id}}">{{$tecnology->tecnology}}</label>
 
                 @endforeach
                 
