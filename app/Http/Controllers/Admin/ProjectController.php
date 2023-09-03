@@ -31,10 +31,10 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $tecnologies = tecnology::all();
+        $tecnologies = Tecnology::all();
         $types = Type::all();
 
-        return view('admin.projects.create', compact('tecnologies', 'types'));
+        return view('admin.projects.create', compact('types', 'tecnologies'));
     }
 
     /**
@@ -57,14 +57,16 @@ class ProjectController extends Controller
             $path = $request->file('thumb')->store('thumb');
             $project->thumb = $path;
         }
-        $project->save();
-        if (isset($form_data["type"])) {
-            $project->types()->attach($form_data["type"]);
-        }
-        
+
         if (isset($form_data["tecnology"])) {
             $project->tecnologies()->attach($form_data["tecnology"]);
-        }        return redirect()->route('admin.projects.index');
+        } 
+
+        $project->save();
+
+               
+        
+        return redirect()->route('admin.projects.index');
 
     }
 
