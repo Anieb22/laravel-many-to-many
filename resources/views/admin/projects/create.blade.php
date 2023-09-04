@@ -42,13 +42,12 @@
                     @endforeach
                 </div>
                 <div class="form-group my-2">
-                    <h6 for="" class="control-label">Tecnologia</h6>
+                    <h6 class="control-label">Tecnologia</h6>
                     @foreach ($tecnologies as $tecnology)
-                    <input type="checkbox" value="{{$tecnology->id}}" name = "tecnology_id" id="{{$tecnology->id}}">
+                    <input type="checkbox" value="{{$tecnology->id}}" name="technologies[]" id="{{$tecnology->id}}">
                     <label for="{{$tecnology->id}}">{{$tecnology->tecnology}}</label>
                     @endforeach
                 </div>
-                
                 <div class="mb-3">
                   <label for="formFile" class="form-label">Logo</label>
                   <input class="form-control" type="file" id="thumb" name="thumb">

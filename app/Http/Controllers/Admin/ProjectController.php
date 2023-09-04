@@ -46,23 +46,23 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $form_data = $request->all();
-
+        
         $project = new Project();
-        $project->azienda = $form_data['azienda'];
-        $project->nome_progetto = $form_data['nome_progetto'];
-        $project->descrizione = $form_data['descrizione'];
-        $project->passaggi = $form_data['passaggi'];
-        $project->data_di_creazione = $form_data['data_di_creazione'];       
+        $project->fill($form_data);
+        //dd($form_data);
         if ($request->hasFile('thumb')) {
             $path = $request->file('thumb')->store('thumb');
             $project->thumb = $path;
         }
 
-        if (isset($form_data["tecnology"])) {
-            $project->tecnologies()->attach($form_data["tecnology"]);
-        } 
+        if ($request->has('technologies')){
 
+            $project->technologies()->attach($request->technologies);
+        }
+
+        
         $project->save();
+        
 
                
         
