@@ -116,16 +116,20 @@ class ProjectController extends Controller
             $path = $request->file('thumb')->store('thumb');
             $project->thumb = $path;
         }
-        
-        $project->save();
-        
-        if ($request->has('tecnologies')) {
-            $selectedTecnologies = $request->input('tecnologies');
+
+        if ($request->has('technologies')) {
+            $selectedTecnologies = $request->input('technologies');
             $project->tecnologies()->sync($selectedTecnologies);
         } else {
             $project->tecnologies()->detach();
         }
+        
+        $project->save();
+
         return redirect()->route('admin.projects.index');
+
+        
+        
     }
 
     /**
