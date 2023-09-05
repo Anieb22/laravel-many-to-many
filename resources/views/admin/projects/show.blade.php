@@ -86,14 +86,12 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row" colspan="2">U.S. Price</th>
-                                <td class="text-primary text-uppercase">
-                                    {{ $project->tecnology }}
-                                </td>
-                            </tr>
-                            <tr>
                                 <th scope="row" colspan="2">On Sale Date</th>
-                                <td>{{$project->sale_date}}</td>
+                                <td class="text-primary text-uppercase">
+                                @foreach ($project->tecnologies as $technology)
+                                    {{ $technology->tecnology }}
+                                @endforeach
+                        </td>
                             </tr>
                         </tbody>
                 </table>

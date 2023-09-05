@@ -6,7 +6,7 @@ use App\Models\Project;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreProjectRequest;
 use Illuminate\Http\Request;
-use App\Models\tecnology;
+use App\Models\Tecnology;
 use App\Models\Type;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -54,14 +54,14 @@ class ProjectController extends Controller
             $path = $request->file('thumb')->store('thumb');
             $project->thumb = $path;
         }
-
-        if ($request->has('technologies')){
-
-            $project->technologies()->attach($request->technologies);
-        }
-
         
         $project->save();
+
+        if ($request->has('technologies')){
+    
+            $project->tecnologies()->attach($request->technologies);
+        }
+
         
 
                
@@ -80,7 +80,6 @@ class ProjectController extends Controller
     {
         $tecnologies = Tecnology::all();
         $types = Type::all();
-
         return view('admin.projects.show', compact('project', 'types', 'tecnologies'));;
 
     }
@@ -122,11 +121,10 @@ class ProjectController extends Controller
         
         if ($request->has('tecnologies')) {
             $selectedTecnologies = $request->input('tecnologies');
-            $project->tecnology()->sync($selectedTecnologies);
+            $project->tecnologies()->sync($selectedTecnologies);
         } else {
-            $project->tecnology()->detach();
+            $project->tecnologies()->detach();
         }
-
         return redirect()->route('admin.projects.index');
     }
 
